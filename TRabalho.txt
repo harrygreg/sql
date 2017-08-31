@@ -1,0 +1,47 @@
+Create Database Venda_Drinks;
+Use Venda_Drinks;
+
+Create Table Medida(
+idMedida int auto_increment primary key,
+Nome varchar(100) not null,
+Descricao varchar(100) not null);
+
+Create Table Tipo_Ingrediente(
+idTipoIngrendiente int auto_increment primary key,
+descricao varchar(100) not null 
+);
+
+Create table Bebida(
+idBebida int auto_increment primary key,
+Nome varchar(100) not null,
+Modo_Preparo varchar(100) not null,
+Quantidade int not null,
+FKidMedida int not null,
+foreign key (FKidMedida) references Medida(idMedida),
+Temperatura decimal(3,2) not null );
+
+Create table Ingrediente(
+idIngrediente int auto_increment primary key,
+Nome varchar(100) not null,
+FkidTipoIngrediente int not null,
+foreign key (FkidTipoIngrediente) references Tipo_Ingrediente(idTipoIngrendiente)
+);
+
+Create table BebidaIngrediente(
+FkidBedida int,
+FkidIngrediente int,
+FkidMedida int not null,
+Quantidade int not null,
+primary key (FkidBedida,FkidIngrediente),
+foreign key (FkidBedida) references Bebida(idBebida),
+foreign key (FkidIngrediente) references Ingrediente(idIngrediente),
+foreign key (FkidMedida) references Medida(idMedida));
+
+Create table Venda(
+idBebida int,
+Data_venda datetime, 
+primary key (idBebida,Data_venda),
+foreign key (idBebida) references Bebida(idBebida),
+Quantidade int not null
+)
+
